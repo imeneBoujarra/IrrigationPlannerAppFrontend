@@ -1,0 +1,45 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header class="d-flex justify-content-between align-items-center">
+    <mat-card-title class="m-b-0">irrigation journaliere</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>date </th>
+            <th>heure fin</th>
+            <th>heure début</th>
+            <th>Sector</th>
+            <th>validité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of journaliers; index as i">
+            <td>{{getSectorName(item.sector)}}</td>
+            <td>{{item.da}}</td>
+            <td>{{item.hod}}</td>
+            <td>{{item.hof}}</td>
+            <td>{{item.va}}</td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <nav class="d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" href="#" (click)="prevPage()">Previous</a>
+        </li>
+        <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+          <a class="page-link" href="#" (click)="goToPage(page)">{{page}}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" href="#" (click)="nextPage()">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,59 @@
+<!-- treatment-dialog.component.html -->
+<h2 mat-dialog-title class="m-b-30">Gestion des dépenses</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="depenseForm">
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">catégorie</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="cat">
+      <div *ngIf="depenseForm.get('cat')!.invalid && (depenseForm.get('cat')!.dirty )">
+        <mat-error
+          *ngIf="depenseForm.get('cat')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">désignation</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="des">
+      <div *ngIf="depenseForm.get('des')!.invalid && (depenseForm.get('des')!.dirty )">
+        <mat-error
+          *ngIf="depenseForm.get('des')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">date</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="da">
+      <div *ngIf="depenseForm.get('da')!.invalid && (depenseForm.get('da')!.dirty )">
+        <mat-error
+          *ngIf="depenseForm.get('da')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">montant à payer</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="mon">
+      <div *ngIf="depenseForm.get('mon')!.invalid && (depenseForm.get('mon')!.dirty )">
+        <mat-error *ngIf="depenseForm.get('mon')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+        <mat-error *ngIf="depenseForm.get('mon')?.errors?.['pattern']">
+          Veuillez entrer un nombre valide.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!depenseForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

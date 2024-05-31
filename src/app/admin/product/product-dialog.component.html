@@ -1,0 +1,68 @@
+<!-- treatment-dialog.component.html -->
+
+<h2 mat-dialog-title class="m-b-30">Gestion des produits</h2>
+
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="name">
+      <div *ngIf="productForm.get('name')!.invalid && (productForm.get('name')!.dirty )">
+        <mat-error
+          *ngIf="productForm.get('name')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom du fournisseur</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="four">
+      <div *ngIf="productForm.get('four')!.invalid && (productForm.get('four')!.dirty )">
+        <mat-error
+          *ngIf="productForm.get('four')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Technique d'utilisation</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="useMethod">
+      <div *ngIf="productForm.get('useMethod')!.invalid && (productForm.get('useMethod')!.dirty )">
+        <mat-error
+          *ngIf="productForm.get('useMethod')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Description</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="desc">
+      <div *ngIf="productForm.get('desc')!.invalid && (productForm.get('desc')!.dirty )">
+        <mat-error
+          *ngIf="productForm.get('desc')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Quantité en stock</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="qty">
+      <div *ngIf="productForm.get('qty')!.invalid && (productForm.get('qty')!.dirty )">
+        <mat-error *ngIf="productForm.get('qty')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+        <mat-error *ngIf="productForm.get('qty')?.errors?.['pattern']">
+          Veuillez entrer un nombre valide.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!productForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

@@ -1,0 +1,86 @@
+<h2 mat-dialog-title class="m-b-30">Gestion des traitements</h2>
+
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="treatmentForm">
+    
+   
+  
+    
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Date de début</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput [matDatepicker]="picker" formControlName="start" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <div *ngIf="treatmentForm.get('start')!.invalid && (treatmentForm.get('start')!.dirty || treatmentForm.get('start')!.touched)">
+        <mat-error *ngIf="treatmentForm.get('start')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+
+
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">secteur</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput type="string" formControlName="se">
+      <div *ngIf="treatmentForm.get('se')!.invalid && (treatmentForm.get('se')!.dirty )">
+        <mat-error *ngIf="treatmentForm.get('se')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Date de fin</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput [matDatepicker]="picker1" formControlName="end" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+      <div *ngIf="treatmentForm.get('end')!.invalid && (treatmentForm.get('end')!.dirty || treatmentForm.get('end')!.touched)">
+        <mat-error *ngIf="treatmentForm.get('end')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Quantité par citerne</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput type="number" formControlName="qte">
+      <div *ngIf="treatmentForm.get('qte')!.invalid && (treatmentForm.get('qte')!.dirty )">
+        <mat-error *ngIf="treatmentForm.get('qte')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Produits</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-select formControlName="products" multiple>
+        <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
+      </mat-select>
+      <div *ngIf="treatmentForm.get('products')!.invalid && (treatmentForm.get('products')!.dirty )">
+        <mat-error *ngIf="treatmentForm.get('products')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">technique</mat-label>
+
+    <mat-radio-group formControlName="te" class="w-100" color="primary">
+      <mat-radio-button value="gout">gout a gout</mat-radio-button>
+      <mat-radio-button value="foliaire">Foliaire</mat-radio-button>
+    </mat-radio-group>
+    
+ 
+
+
+
+
+  
+
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!treatmentForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

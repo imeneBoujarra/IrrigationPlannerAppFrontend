@@ -1,0 +1,63 @@
+<h2 mat-dialog-title class="m-b-30">Gestion des entrées/sorties</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="entreForm">
+    
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;" #fileInput>
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Image</mat-label>
+    <div *ngIf="entreForm.get('image')?.value">
+      <img [src]="entreForm.get('image')?.value" alt="Selected Image" style="max-width: 100%; max-height: 200px;">
+    </div>
+    
+    <button mat-flat-button color="primary" (click)="fileInput.click()" class="d-flex justify-content-center" *ngIf="!entreForm.get('image')?.value">
+      <mat-icon>add</mat-icon> Ajouter une image
+    </button>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Débit</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-select formControlName="cat">
+        <mat-option value="entre">Entre</mat-option>
+        <mat-option value="sortie">Sortie</mat-option>
+      </mat-select>
+      <div *ngIf="entreForm.get('cat')!.invalid && (entreForm.get('cat')!.dirty)">
+        <mat-error *ngIf="entreForm.get('cat')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Désignation</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="des">
+      <div *ngIf="entreForm.get('des')!.invalid && (entreForm.get('des')!.dirty )">
+        <mat-error *ngIf="entreForm.get('des')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="no">
+      <div *ngIf="entreForm.get('no')!.invalid && (entreForm.get('no')!.dirty )">
+        <mat-error *ngIf="entreForm.get('no')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Date</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput [matDatepicker]="picker" formControlName="da" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <div *ngIf="entreForm.get('da')!.invalid && (entreForm.get('da')!.dirty || entreForm.get('da')!.touched)">
+        <mat-error *ngIf="entreForm.get('da')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="entreForm.invalid">Enregistrer</button>
+    <button mat-raised-button color="warn" type="button" (click)="dialogRef.close()">Annuler</button>
+  </form>
+</mat-dialog-content>

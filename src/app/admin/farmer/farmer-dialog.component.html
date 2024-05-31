@@ -1,0 +1,66 @@
+<!-- sector-dialog.component.html -->
+
+<h2 mat-dialog-title class="m-b-30">Gestion des agriculteurs</h2>
+
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="farmerForm">
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Prénom</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="fName">
+      <div *ngIf="farmerForm.get('fName')!.invalid && (farmerForm.get('fName')!.dirty )">
+        <mat-error
+          *ngIf="farmerForm.get('fName')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="lName">
+      <div *ngIf="farmerForm.get('lName')!.invalid && (farmerForm.get('lName')!.dirty )">
+        <mat-error *ngIf="farmerForm.get('lName')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="email">
+      <div *ngIf="farmerForm.get('email')!.invalid && (farmerForm.get('email')!.dirty )">
+        <mat-error *ngIf="farmerForm.get('email')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+        <mat-error *ngIf="farmerForm.get('email')?.errors?.['email']">
+          Veuillez entrer un email valide
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Téléphone</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="phone">
+      <div *ngIf="farmerForm.get('phone')!.invalid && (farmerForm.get('phone')!.dirty )">
+        <mat-error *ngIf="farmerForm.get('phone')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Mot de passe</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="password" type="password">
+      <div *ngIf="farmerForm.get('password')!.invalid && (farmerForm.get('password')!.dirty )">
+        <mat-error *ngIf="farmerForm.get('password')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!farmerForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

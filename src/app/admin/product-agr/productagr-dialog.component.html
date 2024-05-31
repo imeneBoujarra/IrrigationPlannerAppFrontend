@@ -1,0 +1,41 @@
+<!-- treatment-dialog.component.html -->
+
+<h2 mat-dialog-title class="m-b-30">Gestion des produits</h2>
+
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="ProductAgrForm">
+    
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-label>Produits</mat-label>
+      <mat-select formControlName="products" multiple>
+        <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="ProductAgrForm.get('products')?.touched && ProductAgrForm.get('products')?.errors?.['required']">
+        Ce champ est requis.
+      </mat-error>
+      <mat-error *ngIf="ProductAgrForm.get('qty')?.touched && ProductAgrForm.get('qty')?.errors?.['pattern']">
+        Veuillez entrer un nombre valide.
+      </mat-error>
+      <!-- Afficher l'erreur overstock ici -->
+      <mat-error *ngIf="ProductAgrForm.hasError('overstock')">
+        La quantité saisie dépasse le stock disponible pour un ou plusieurs produits sélectionnés.
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-label>Quantité en stock</mat-label>
+      <input matInput formControlName="qty">
+      <mat-error *ngIf="ProductAgrForm.get('qty')?.touched && ProductAgrForm.get('qty')?.errors?.['required']">
+        Ce champ est requis.
+      </mat-error>
+      <mat-error *ngIf="ProductAgrForm.get('qty')?.touched && ProductAgrForm.get('qty')?.errors?.['pattern']">
+        Veuillez entrer un nombre valide.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!ProductAgrForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

@@ -1,0 +1,59 @@
+<ng-container *ngIf="showForm">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-header class="d-flex justify-content-between align-items-center">
+      <mat-card-title class="m-b-0">Irrigation Journaliere pour aujourd'hui</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Secteur</th>
+            <th>Date</th>
+            <th>Heure début</th>
+            <th>Heure fin</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let planification of planifications">
+          
+            <td>{{ planification.start }}</td>
+            <td>{{ planification.hod }}</td>
+            <td>{{ planification.hof }}</td>
+            <!-- Supprimer l'appel de la méthode editPlanification -->
+            <td><button>Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+
+<ng-container *ngIf="showForm">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-header class="d-flex justify-content-between align-items-center">
+      <mat-card-title class="m-b-0">Add irrigation journaliere</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <form (ngSubmit)="addJournaliere()" [formGroup]="AddJournaliere">
+        <div class="text-center">
+          <div class="col-md-10 p-2">
+            <label for="start" class="col-md-4">Date</label>
+            <input class="col-md-6" type="date" id="da" name="da" formControlName="da" readonly>
+          </div>
+          <div class="col-md-10 p-2">
+            <label for="ho" class="col-md-4">Heure début</label>
+            <input class="col-md-6" type="time" id="hod" name="hod" formControlName="hod" required>
+          </div>
+          <div class="col-md-10 p-2">
+            <label for="end" class="col-md-4">Heure fin</label>
+            <input class="col-md-6" type="time" id="hof" name="hof" formControlName="hof" readonly>
+          </div>
+          <button class="col-md-4 mt-2" mat-flat-button color="primary" type="submit" [disabled]="!AddJournaliere.valid">
+            Ajouter
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

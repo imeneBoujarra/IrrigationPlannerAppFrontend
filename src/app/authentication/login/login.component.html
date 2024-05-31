@@ -1,0 +1,67 @@
+<div class="blank-layout-container justify-content-center align-items-center bg-light-primary">
+  <div
+          class="position-relative row w-100 h-100 bg-gredient justify-content-center"
+  >
+    <div class="col-lg-4 d-flex align-items-center">
+      <mat-card class="cardWithShadow boxed-auth">
+        <mat-card-content class="p-32">
+          <div class="text-center">
+            <a [routerLink]="['/dashboard']">
+              <img
+                      src="../../../assets/images/logos/logo.png"
+                      class="align-middle m-2"
+                      alt="logo"
+              />
+            </a>
+          </div>
+
+          <div class="or-border m-t-30">Se connecter</div>
+
+          <mat-error class="m-t-30" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </mat-error>
+
+          <form class="m-t-30" [formGroup]="loginForm">
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+            >Email</mat-label
+            >
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput
+                     formControlName="email">
+              <div *ngIf="loginForm.get('email')!.invalid && (loginForm.get('email')!.dirty )">
+                <mat-error
+                        *ngIf="loginForm.get('email')?.errors?.['required']">
+                  Ce champ est requis.
+                </mat-error>
+                <mat-error
+                        *ngIf="loginForm.get('email')?.errors?.['email']">
+                  Veuillez entrer une adresse e-mail valide.
+                </mat-error>
+              </div>
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
+            >Mot de passe</mat-label
+            >
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput type="password"
+                     formControlName="password">
+              <div *ngIf="loginForm.get('password')!.invalid && (loginForm.get('password')!.dirty )">
+                <mat-error
+                        *ngIf="loginForm.get('password')?.errors?.['required']">
+                  Ce champ est requis.
+                </mat-error>
+              </div>
+            </mat-form-field>
+
+            <button mat-flat-button  (click)="login()" color="primary" class="w-100">
+              Se connecter
+            </button>
+            <!-- input -->
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,44 @@
+<!-- treatment-dialog.component.html -->
+<h2 mat-dialog-title class="m-b-30">Gestion des secteurs</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="sectorForm">
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="name">
+      <div *ngIf="sectorForm.get('name')!.invalid && (sectorForm.get('name')!.dirty )">
+        <mat-error
+          *ngIf="sectorForm.get('name')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Taille</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="size">
+      <div *ngIf="sectorForm.get('size')!.invalid && (sectorForm.get('size')!.dirty )">
+        <mat-error *ngIf="sectorForm.get('size')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+        <mat-error *ngIf="sectorForm.get('size')?.errors?.['pattern']">
+          Veuillez entrer un nombre valide.
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nombre d'oliviers</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="nbr">
+      <div *ngIf="sectorForm.get('nbr')!.invalid && (sectorForm.get('nbr')!.dirty )">
+        <mat-error *ngIf="sectorForm.get('nbr')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+        <mat-error *ngIf="sectorForm.get('nbr')?.errors?.['pattern']">
+          Veuillez entrer un nombre valide.
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!sectorForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

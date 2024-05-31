@@ -1,0 +1,46 @@
+<!-- treatment-dialog.component.html -->
+<h2 mat-dialog-title class="m-b-30">Gestion des secteurs</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="tacheForm">
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nom Tache </mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="name">
+      <div *ngIf="tacheForm.get('name')!.invalid && (tacheForm.get('name')!.dirty )">
+        <mat-error
+          *ngIf="tacheForm.get('name')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">prix homme</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="ph">
+      <div *ngIf="tacheForm.get('ph')!.invalid && (tacheForm.get('ph')!.dirty )">
+        <mat-error *ngIf="tacheForm.get('ph')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+        <mat-error *ngIf="tacheForm.get('ph')?.errors?.['pattern']">
+          Veuillez entrer un nombre valide.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">prix</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput formControlName="pf">
+      <div *ngIf="tacheForm.get('pf')!.invalid && (tacheForm.get('pf')!.dirty )">
+        <mat-error *ngIf="tacheForm.get('pf')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+        <mat-error *ngIf="tacheForm.get('ph')?.errors?.['pattern']">
+          Veuillez entrer un nombre valide.
+        </mat-error>
+      </div>
+    </mat-form-field>
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!tacheForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

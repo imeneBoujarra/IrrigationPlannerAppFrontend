@@ -1,0 +1,89 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header class="d-flex justify-content-between align-items-center">
+    <mat-card-title class="m-b-0">les ouvriers</mat-card-title>
+    <button mat-flat-button color="primary" (click)="openDialog()" class="d-flex justify-content-center">
+      <mat-icon>add</mat-icon> Ajouter
+    </button>
+   
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="personels" class="w-100">
+
+        <!-- Sector Column -->
+        <ng-container matColumnDef="sector">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+            Secteur
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ getSectorName(element.sector) }}
+          </td>
+        </ng-container>
+
+        <!-- Tache Column -->
+        <ng-container matColumnDef="tache">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+            Tâche
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ getTacheName(element.tache) }}
+          </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="da">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+            Date
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ element.da | date }}
+          </td>
+        </ng-container>
+
+        <!-- NbrH Column -->
+        <ng-container matColumnDef="nbrh">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+            Nombre d'hommes
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ element.nbrh }}
+          </td>
+        </ng-container>
+
+        <!-- NbrF Column -->
+        <ng-container matColumnDef="nbrf">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+            Nombre de femmes
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ element.nbrf }}
+          </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14">
+            Action
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            <button mat-icon-button color="primary" class="m-r-15" (click)="update(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="calculateMontant(element)">
+              <mat-icon>calculate</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <div *ngIf="totalFemaleAmount !== undefined" class="m-t-20">
+      <strong>Total Montant Femme: {{ totalFemaleAmount }}</strong>
+    </div>
+  </mat-card-content>
+</mat-card>

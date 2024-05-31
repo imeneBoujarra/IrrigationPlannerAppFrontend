@@ -1,0 +1,88 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header class="d-flex justify-content-between align-items-center">
+    <mat-card-title class="m-b-0">Secteurs</mat-card-title>
+    <button mat-flat-button color="primary" (click)="openDialog()" class="d-flex justify-content-center">
+      <mat-icon>add</mat-icon> Ajouter
+    </button>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="sectors" class="w-100">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="f-w-600 mat-subtitle-1 f-s-14"
+          >
+            Nom
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ element.name }}
+          </td>
+        </ng-container>
+
+        <!-- Size Column -->
+        <ng-container matColumnDef="size">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="f-w-600 mat-subtitle-1 f-s-14"
+          >
+            Taille en hectare
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ element.size }}
+          </td>
+        </ng-container>
+
+        <!-- Nbr Column -->
+        <ng-container matColumnDef="nbr">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="f-w-600 mat-subtitle-1 f-s-14"
+          >
+            Nombre d'oliviers
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            {{ element.size }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="f-w-600 mat-subtitle-1 f-s-14"
+          >
+           Action
+          </th>
+          <td mat-cell *matCellDef="let element" class="mat-body-1">
+            <button mat-icon-button color="primary" class="m-r-15" (click)="update(element)">
+              <i-tabler
+                class="routeIcon"
+                name="edit"
+                matListItemIcon
+              ></i-tabler>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(element.id)">
+              <i-tabler
+                class="routeIcon"
+                name="trash"
+                matListItemIcon
+              ></i-tabler>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,65 @@
+<h2 mat-dialog-title class="m-b-30">Gestion des personnels</h2>
+
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="personelForm">
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Tâche</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-select formControlName="tache">
+        <mat-option *ngFor="let tache of taches" [value]="tache.id">{{ tache.name }}</mat-option>
+      </mat-select>
+      <div *ngIf="personelForm.get('tache')!.invalid && (personelForm.get('tache')!.dirty || personelForm.get('tache')!.touched)">
+        <mat-error *ngIf="personelForm.get('tache')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Secteur</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <mat-select formControlName="sector">
+        <mat-option *ngFor="let sector of sectors" [value]="sector.id">{{ sector.name }}</mat-option>
+      </mat-select>
+      <div *ngIf="personelForm.get('sector')!.invalid && (personelForm.get('sector')!.dirty || personelForm.get('sector')!.touched)">
+        <mat-error *ngIf="personelForm.get('sector')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Date</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput type="date" formControlName="da">
+      <div *ngIf="personelForm.get('da')!.invalid && (personelForm.get('da')!.dirty || personelForm.get('da')!.touched)">
+        <mat-error *ngIf="personelForm.get('da')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nombre d'hommes</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput type="number" formControlName="nbrh">
+      <div *ngIf="personelForm.get('nbrh')!.invalid && (personelForm.get('nbrh')!.dirty || personelForm.get('nbrh')!.touched)">
+        <mat-error *ngIf="personelForm.get('nbrh')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Nombre de femmes</mat-label>
+    <mat-form-field appearance="outline" class="w-100" color="primary">
+      <input matInput type="number" formControlName="nbrf">
+      <div *ngIf="personelForm.get('nbrf')!.invalid && (personelForm.get('nbrf')!.dirty || personelForm.get('nbrf')!.touched)">
+        <mat-error *ngIf="personelForm.get('nbrf')?.errors?.['required']">
+          Ce champ est requis.
+        </mat-error>
+      </div>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!personelForm.valid">Envoyer</button>
+      <button mat-stroked-button color="basic" mat-dialog-close>Fermer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
