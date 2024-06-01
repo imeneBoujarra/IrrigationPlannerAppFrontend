@@ -21,6 +21,11 @@ export class JournaliereService {
     return this.afs.collection("irrigations").valueChanges();
 
   }
+
+  delete(id: string) {
+    return this.afs.doc('/irrigations/' + id).delete();
+  }
+
   fetchDataByPlanification(collectionName: string, planification: string): Observable<any[]> {
     return this.afs.collection(collectionName, ref => ref.where('planificationId', '==', planification)).valueChanges();
   }
@@ -28,8 +33,6 @@ export class JournaliereService {
     return this.afs.doc('/irrigations/' + id).update(productagr);
   }
 
-
-  
   fetchTodaysIrrigationData(planificationId: string): Observable<Irrigation[]> {
     return this.afs.collection<Irrigation>('irrigations', ref => ref.where('planificationId', '==', planificationId)).snapshotChanges()
       .pipe(

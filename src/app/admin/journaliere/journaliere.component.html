@@ -24,13 +24,13 @@
             <td>{{getSectorName(item.sector)}}</td>
             <td *ngIf="!role">
               <button mat-stroked-button color="primary" (click)="validateIrrigation(item)" *ngIf="!item.state">Validate</button>
-              <span *ngIf="item.state">Completed</span>
-
-            </td>
-            <td *ngIf="role">
-              <span *ngIf="item.state">Completed</span>
-              <span *ngIf="!item.state">Not Completed</span>
-            </td>
+              <span *ngIf="item.state" class="status-indicator completed">Completed</span>
+          </td>
+          <td *ngIf="role">
+              <span *ngIf="item.state" class="status-indicator completed">Completed</span>
+              <span *ngIf="!item.state" class="status-indicator not-completed">Not Completed</span>
+          </td>
+          
             
           </tr>
         </tbody>

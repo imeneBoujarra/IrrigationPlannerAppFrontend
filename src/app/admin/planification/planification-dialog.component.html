@@ -14,25 +14,30 @@
       </div>
     </mat-form-field>
 
-    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Date de début</mat-label>
     <mat-form-field appearance="outline" class="w-100" color="primary">
       <input matInput type="date" formControlName="start">
       <div *ngIf="planificationForm.get('start')!.invalid && (planificationForm.get('start')!.dirty)">
         <mat-error *ngIf="planificationForm.get('start')?.errors?.['required']">
           Ce champ est requis.
         </mat-error>
+        <mat-error *ngIf="planificationForm.get('start')?.errors?.['min']">
+          La date doit être supérieure ou égale à aujourd'hui.
+        </mat-error>
       </div>
     </mat-form-field>
-
-    <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Date de fin</mat-label>
+    
     <mat-form-field appearance="outline" class="w-100" color="primary">
       <input matInput type="date" formControlName="end">
       <div *ngIf="planificationForm.get('end')!.invalid && (planificationForm.get('end')!.dirty)">
         <mat-error *ngIf="planificationForm.get('end')?.errors?.['required']">
           Ce champ est requis.
         </mat-error>
+        <mat-error *ngIf="planificationForm.get('end')?.errors?.['min']">
+          La date doit être supérieure ou égale à aujourd'hui.
+        </mat-error>
       </div>
     </mat-form-field>
+    
 
     <mat-error *ngIf="planificationForm.errors?.['dateInvalid']">
       La date de début doit être inférieure à la date de fin.

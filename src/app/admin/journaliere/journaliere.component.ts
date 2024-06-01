@@ -7,10 +7,14 @@ import { Irrigation } from './irrigation';
 import { ActivatedRoute } from '@angular/router';
 import { PlanificationService } from '../planification/planification.service';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sector',
-  templateUrl: './journaliere.component.html'
+  templateUrl: './journaliere.component.html',
+  styleUrls: ['./journaliere.scss'] // Add this line
+
+  
 })
 export class JournaliereComponent implements OnInit {
   displayedColumns: string[] = ['sector', 'hof', 'hod', 'da', 'va', 'action'];
@@ -122,8 +126,26 @@ export class JournaliereComponent implements OnInit {
   }
 
   validateIrrigation(item: any): void {
-    item.state = true;
-    this.journalierService.updateIrrigation(item._id , item);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes,I validate Irrigation!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        item.state = true;
+        this.journalierService.updateIrrigation(item._id , item);
+        Swal.fire({
+          title: "Completed!",
+          text: "You completed Irrigation.",
+          icon: "success"
+        });
+      }
+    });
+   
   }
     
   getSectorName(id: string): string | undefined {

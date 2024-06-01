@@ -24,8 +24,8 @@ export class PlanificationDialogComponent implements OnInit {
   // Apply the custom validator to the form
   planificationForm = this.fb.group({
     sector: [this.data.planification ? this.data.planification.sector : '', [Validators.required]],
-    start: [this.data.planification ? this.data.planification.start : '', [Validators.required]],
-    end: [this.data.planification ? this.data.planification.end : '', [Validators.required]],
+    start: [this.data.planification ? this.data.planification.start : '', [Validators.required,  Validators.min(this.getMinDate())]],
+    end: [this.data.planification ? this.data.planification.end : '', [Validators.required,  Validators.min(this.getMinDate())]],
     hof: [this.data.planification ? this.data.planification.hof : '', [Validators.required]],
     hod: [this.data.planification ? this.data.planification.hod : '', [Validators.required]],
   }, { validator: dateLessThan('start', 'end') });
@@ -53,6 +53,11 @@ export class PlanificationDialogComponent implements OnInit {
  
   }
 
+  getMinDate(): number {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+    return today.getTime(); // Get today's date as a numeric timestamp
+  }
 
   private planification(): Planification {
     const sector = this.planificationForm.get('sector')!.value;
@@ -87,6 +92,9 @@ export class PlanificationDialogComponent implements OnInit {
    
     };
   }
+
+
+
 
   onSubmit() {
     if (this.planificationForm.valid) {

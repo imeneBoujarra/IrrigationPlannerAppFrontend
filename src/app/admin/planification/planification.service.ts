@@ -22,7 +22,6 @@ export class PlanificationService {
     return this.afs.collection('/planifications').snapshotChanges();
   }
   delete(id: string) {
-    console.log("deleted")
     return this.afs.doc('/planifications/' + id).delete();
   }
   update(id: string, planification: Planification) {

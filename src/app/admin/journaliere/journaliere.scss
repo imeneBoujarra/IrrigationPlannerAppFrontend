@@ -1,0 +1,14 @@
+.status-indicator {
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.completed {
+    color: green;
+}
+
+.not-completed {
+    color: red;
+}
