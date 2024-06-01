@@ -8,19 +8,29 @@
         <thead>
           <tr>
             <th>date </th>
-            <th>heure fin</th>
             <th>heure début</th>
+            <th>heure fin</th>
+           
             <th>Sector</th>
             <th>validité</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of journaliers; index as i">
-            <td>{{getSectorName(item.sector)}}</td>
-            <td>{{item.da}}</td>
+            <td>{{item.date| timestampToDate  }}</td>
+        
             <td>{{item.hod}}</td>
             <td>{{item.hof}}</td>
-            <td>{{item.va}}</td>
+            <td>{{getSectorName(item.sector)}}</td>
+            <td *ngIf="!role">
+              <button mat-stroked-button color="primary" (click)="validateIrrigation(item)" *ngIf="!item.state">Validate</button>
+              <span *ngIf="item.state">Completed</span>
+
+            </td>
+            <td *ngIf="role">
+              <span *ngIf="item.state">Completed</span>
+              <span *ngIf="!item.state">Not Completed</span>
+            </td>
             
           </tr>
         </tbody>

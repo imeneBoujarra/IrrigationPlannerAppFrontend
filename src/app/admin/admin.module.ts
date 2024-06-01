@@ -39,6 +39,7 @@ import { PersonelDialogComponent } from './personel/personel-dialog.component';
 import { PersonelComponent } from './personel/personel.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TimestampToDatePipe } from '../timestamp-to-date.pipe';
 
 
 
@@ -83,7 +84,8 @@ CueilletteDialogComponent,
 VenteDialogComponent,
 VenteComponent,
 PersonelDialogComponent,
-PersonelComponent
+PersonelComponent,
+TimestampToDatePipe
 
 
 

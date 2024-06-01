@@ -11,12 +11,18 @@ export class PlanificationService {
   constructor(private afs: AngularFirestore) { }
   create(planification: Planification) {
     planification.id = this.afs.createId();
-    return this.afs.collection('/planifications').add(planification)
+    return this.afs.collection('/planifications').add(planification).then((aded :any)=>
+    {
+      console.log(aded);
+
+    })
+
   }
   fetchAll() {
     return this.afs.collection('/planifications').snapshotChanges();
   }
   delete(id: string) {
+    console.log("deleted")
     return this.afs.doc('/planifications/' + id).delete();
   }
   update(id: string, planification: Planification) {

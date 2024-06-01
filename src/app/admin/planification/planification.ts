@@ -1,5 +1,4 @@
 import { Heure } from "../heure";
-
 export class Planification {
   constructor(
     public id?: string,
@@ -8,7 +7,8 @@ export class Planification {
     public end?: Date,
     public hod?: Heure,
     public hof?: Heure,
-
+    
+   
   ) { }
 
 }

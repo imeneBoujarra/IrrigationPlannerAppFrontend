@@ -7,6 +7,10 @@ import { PlanificationService } from './planification.service';
 import { Planification } from './planification';
 import { Heure } from '../heure';
 import { dateLessThan } from '../date-validators';
+import { Irrigation } from '../journaliere/irrigation';
+import { JournaliereService } from '../journaliere/journaliere.service';
+import { Timestamp } from 'firebase/firestore';
+import { timestamp } from 'rxjs';
 
 
 @Component({
@@ -31,22 +35,56 @@ export class PlanificationDialogComponent implements OnInit {
     private planificationService: PlanificationService,
     public dialogRef: MatDialogRef<PlanificationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { planification?: Planification, sectors: Sector[] },
-    private sectorService: SectorService
+    private irrigationService : JournaliereService
   ) { }
 
   ngOnInit(): void {
     this.sectors = this.data.sectors;
+   
   }
 
+  private generateIrrigations(  farmerId :string , planification :string , start: Date, end: Date, sector: string) {
+    let currentDate = new Date(start);
+    let endDate = new Date(end);
+    while (currentDate <= endDate) {
+      this.irrigationService.create(this.irrigationGet(sector , currentDate,farmerId ,planification  ))
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+ 
+  }
+
+
   private planification(): Planification {
+    const sector = this.planificationForm.get('sector')!.value;
+    const start = this.planificationForm.get('start')!.value;
+    const end = this.planificationForm.get('end')!.value;
+ 
+
     return {
       ...new Planification(),
       id: this.data.planification ? this.data.planification.id : '',
-      sector: this.planificationForm.get('sector')!.value,
-      start: this.planificationForm.get('start')!.value,
-      end: this.planificationForm.get('end')!.value,
+      sector: sector,
+      start: start,
+      end: end,
       hod: this.planificationForm.get('hod')!.value,
       hof: this.planificationForm.get('hof')!.value,
+   
+    };
+  }
+
+  private irrigationGet(sector : any , start :any , farmerId :any ,planificationId:any) :Irrigation
+  {
+    return {
+      ...new Irrigation(),
+      id: '',
+      sector: sector,
+      date: start,
+      hod: this.planificationForm.get('hod')!.value,
+      hof: this.planificationForm.get('hof')!.value,
+      state:false,
+      farmerId:farmerId,
+      planificationId:planificationId,
+   
     };
   }
 
@@ -56,13 +94,29 @@ export class PlanificationDialogComponent implements OnInit {
       if (this.data.planification && this.data.planification.id) {
         // Update existing sector
         this.planificationService.update(this.data.planification.id, sector).then(() => {
-          this.dialogRef.close();
+        this.dialogRef.close();
         });
       } else {
         // Create new sector
+     
         this.planificationService.create(sector).then(() => {
-          this.dialogRef.close();
-        });
+          // Generate irrigations after creating the planification
+          const { start, end} = sector;
+          const userId = localStorage.getItem('uiiduser') ;
+          if (userId != null )
+            {
+                this.generateIrrigations( userId, sector.id!, start!, end!, sector.sector!)
+                this.dialogRef.close();
+       
+            }
+          else {
+            console.log ("can't fetch uId from localStrage");
+          }
+          
+          
+          });
+    
+
       }
     }
   }

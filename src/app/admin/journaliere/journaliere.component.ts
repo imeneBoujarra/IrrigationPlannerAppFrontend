@@ -3,8 +3,10 @@ import { SectorService } from "../sector/sector.service";
 import { Sector } from "../sector/sector";
 import { JournaliereService } from './journaliere.service';
 
-import { Journaliere } from './journaliere';
+import { Irrigation } from './irrigation';
 import { ActivatedRoute } from '@angular/router';
+import { PlanificationService } from '../planification/planification.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sector',
@@ -12,48 +14,70 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class JournaliereComponent implements OnInit {
   displayedColumns: string[] = ['sector', 'hof', 'hod', 'da', 'va', 'action'];
-  planifications: Journaliere[] = [];
+  planifications: Irrigation[] = [];
   sectors: Sector[] = [];
   journaliereService: any;
   journaliers: any[] = [];
+  planification :any 
+  role : any ; 
   pageSize = 10; // Nombre d'éléments par page
   currentPage = 1; // Page actuelle
   constructor(
     private route: ActivatedRoute,
-    private planificationService: JournaliereService,
-    private sectorService: SectorService
+    private planificationService: PlanificationService,
+    private sectorService: SectorService,
+    private journalierService : JournaliereService,
+    private authService : AuthService
   ) { }
 
   ngOnInit(): void {
 
     this.route.params.subscribe(params => {
       const id = params['id'];
-      console.log(id)
-      this.planificationService.fetchDataBySecteur("irrigations", id).subscribe({
-        next: (r: any[]) => {
-
-          this.planifications = r;
-          this.journaliers = r;
-          console.log("r", r)
-          console.log("journaliers", this.journaliers)
+      this.setRole();
+      this.planificationService.fetchTodaysIrrigationData().subscribe({
+        next: (planification: any[]) => {
+          this.planification = planification[0] ;
+          this.fetchAll(planification[0].id);
           this.pagedDataArray();
+
         },
         error: () => {
           console.log('Error while fetching planifications');
         }
       });
     });
-    this.fetchAll();
+   
     this.fetchSectors();
     // this.loadTodaysIrrigationData();
   }
   get totalPages(): number {
     return Math.ceil(this.journaliers.length / this.pageSize);
   }
-  fetchAll() {
-    this.planificationService.fetchAll().subscribe({
+
+
+
+
+  fetchAll(id :any ) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    this.journalierService.fetchTodaysIrrigationData( id).subscribe({
       next: (r: any[]) => {
-        console.log("my r", r)
+        if (this.role)
+        {
+          this.journaliers = r ; 
+        }
+        else {
+          this.journaliers = r.filter(item => {
+            const itemDate = (item.date.seconds ? new Date(item.date.seconds * 1000) : item.date) as Date; // Convert Firestore Timestamp to Date
+            itemDate.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+            return itemDate <= today;
+          });
+
+        }
+
+        console.log("journalier" , r)
+          
 
       },
       error: () => {
@@ -61,12 +85,19 @@ export class JournaliereComponent implements OnInit {
       }
     });
   }
+
+
   get pages(): number[] {
     const pagesArray: number[] = [];
     for (let i = 1; i <= this.totalPages; i++) {
       pagesArray.push(i);
     }
     return pagesArray;
+  }
+
+  setRole() {
+    const role = localStorage.getItem('role');
+    this.role = role === 'admin';
   }
 
   pagedDataArray(): any[] {
@@ -90,14 +121,20 @@ export class JournaliereComponent implements OnInit {
     });
   }
 
+  validateIrrigation(item: any): void {
+    item.state = true;
+    this.journalierService.updateIrrigation(item._id , item);
+  }
+    
   getSectorName(id: string): string | undefined {
-    console.log(this.sectors, id)
     const sector = this.sectors.find(s => s.id === id);
     return sector ? sector.name : undefined;
   }
+
+
   loadTodaysIrrigationData() {
     this.journaliereService.fetchTodaysIrrigationData().subscribe({
-      next: (data: Journaliere[]) => {
+      next: (data: Irrigation[]) => {
         this.journaliers = data;
       },
       error: () => {
@@ -107,7 +144,7 @@ export class JournaliereComponent implements OnInit {
   }
 
   length(obj: any) {
-    console.log(obj)
+
   }
 
   // Fonction pour passer à la page suivante
